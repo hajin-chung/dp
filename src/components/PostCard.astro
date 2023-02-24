@@ -1,0 +1,20 @@
+---
+import { formatDate } from "@/utils/formatDate";
+import type { PostInfo } from "@/utils/types";
+
+export type Props = PostInfo;
+
+const { id, title, created } = Astro.props;
+---
+
+<a
+  class="group flex items-center rounded-lg bg-black bg-opacity-5 p-4 dark:bg-white dark:bg-opacity-5"
+  href={`/post/${id}`}
+>
+  <p
+    class="text-xl font-bold transition-all group-hover:text-2xl group-hover:text-sky-500"
+  >
+    {title}
+  </p>
+  <p class="ml-auto text-sm font-semibold">{formatDate(created)}</p>
+</a>

@@ -1,0 +1,13 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PostCard from "@/components/PostCard.astro";
+import { getPosts } from "@/utils/db";
+
+const posts = await getPosts();
+---
+
+<Layout title="">
+  <div class="mt-4 flex flex-col gap-6">
+    {posts.map((info) => <PostCard {...info} />)}
+  </div>
+</Layout>
