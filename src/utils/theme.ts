@@ -6,7 +6,3 @@ export const theme = atom<Theme>(
     ? (localStorage.getItem("theme") as Theme) ?? "dark"
     : "dark"
 );
-
-theme.listen((nt) => {
-  typeof window !== "undefined" && localStorage.setItem("theme", nt);
-});

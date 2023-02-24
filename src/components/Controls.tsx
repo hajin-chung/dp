@@ -12,6 +12,7 @@ export const Controls = () => {
     if (!html) return;
 
     html.className = $theme();
+    localStorage.setItem("theme", $theme());
   });
 
   return (
