@@ -2,9 +2,11 @@ import { atom } from "nanostores";
 import type { Theme } from "./types";
 
 export const theme = atom<Theme>(
-  (localStorage.getItem("theme") as Theme) ?? "dark"
+  typeof window !== "undefined"
+    ? (localStorage.getItem("theme") as Theme) ?? "dark"
+    : "dark"
 );
 
 theme.listen((nt) => {
-  localStorage.setItem("theme", nt);
+  typeof window !== "undefined" && localStorage.setItem("theme", nt);
 });
