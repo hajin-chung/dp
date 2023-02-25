@@ -54,7 +54,6 @@ export const createPost = async (newPost: PostContent) => {
 
 export const updatePost = async (updatedPost: Post) => {
   try {
-    console.log(updatedPost)
     const { error } = await client
       .from("posts")
       .update(updatedPost)
