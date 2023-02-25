@@ -1,11 +1,11 @@
-export type PostInfo = {
+export type Post = {
   id: string;
   title: string;
   created: string;
-}
-
-export type Post = PostInfo & {
   content: string;
 };
+
+export type PostInfo = Pick<Post, "id" | "title" | "created">;
+export type PostContent = Pick<Post, "title" | "content">;
 
 export type Theme = "dark" | "light";

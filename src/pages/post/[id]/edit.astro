@@ -1,0 +1,19 @@
+---
+import { Editor } from "@/components/Editor";
+import Layout from "@/layouts/Layout.astro";
+import { getPost } from "@/utils/db";
+
+const { id } = Astro.params;
+
+if (!id) {
+  Astro.redirect("/");
+}
+
+const post = await getPost(id!);
+---
+
+<Layout title="">
+  <div class="flex w-full flex-col gap-1">
+    <Editor post={post} client:load />
+  </div>
+</Layout>

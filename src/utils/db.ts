@@ -1,5 +1,6 @@
-import type { Post, PostInfo } from "./types";
+import type { Post, PostContent, PostInfo } from "./types";
 import { createClient } from "@supabase/supabase-js";
+import { createId } from "@paralleldrive/cuid2";
 
 const DB_URI = import.meta.env.DB_URI;
 const DB_KEY = import.meta.env.DB_KEY;
@@ -33,5 +34,35 @@ export const getPost = async (id: string) => {
   } catch (e) {
     console.log(e);
     return undefined;
+  }
+};
+
+export const createPost = async (newPost: PostContent) => {
+  try {
+    const id = createId();
+    const created = new Date().toISOString();
+    const post = { id, created, ...newPost };
+    const { error } = await client.from("posts").insert(post);
+
+    if (error) throw error;
+    return { error: false, post };
+  } catch (e) {
+    console.log(e);
+    return { error: true, message: e };
+  }
+};
+
+export const updatePost = async (updatedPost: Post) => {
+  try {
+    console.log(updatedPost)
+    const { error } = await client
+      .from("posts")
+      .update(updatedPost)
+      .eq("id", updatedPost.id);
+    if (error) throw error;
+    return { error: false, post: updatedPost };
+  } catch (e) {
+    console.log(e);
+    return { error: true, message: e };
   }
 };
