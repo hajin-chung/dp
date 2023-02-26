@@ -1,6 +1,10 @@
 ---
 import { Editor } from "@/components/Editor";
 import Layout from "@/layouts/Layout.astro";
+import { getAuthData } from "@/utils/auth";
+
+const { isAuthed } = getAuthData(Astro.cookies);
+if (!isAuthed) return Astro.redirect("/login");
 ---
 
 <Layout title="">

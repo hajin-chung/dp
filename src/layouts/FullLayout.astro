@@ -1,0 +1,27 @@
+---
+import Header from "@/components/Header.astro";
+import { Controls } from "@/components/Controls";
+---
+
+<!DOCTYPE html>
+<html id="html">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Decompressed Poems</title>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body
+    class="relative flex min-h-screen w-full justify-center bg-white text-black dark:bg-slate-900 dark:text-white"
+  >
+    <script is:inline>
+      document.getElementById("html").className = localStorage.getItem("theme");
+    </script>
+    <div class="mx-2 flex w-full flex-col md:max-w-6xl">
+      <Header />
+      <slot />
+    </div>
+    <Controls client:load />
+  </body>
+</html>

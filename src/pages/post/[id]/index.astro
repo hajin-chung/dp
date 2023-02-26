@@ -4,24 +4,13 @@ import { getPost } from "@/utils/db";
 import { marked } from "marked";
 
 const { id } = Astro.params;
+if (!id) return Astro.redirect("/");
 
-let title = "";
-let content = "";
+const post = await getPost(id);
+if (!post) return Astro.redirect("/");
 
-if (!id) {
-  Astro.redirect("/");
-  return;
-} else {
-  const post = await getPost(id);
-
-  if (!post) {
-    Astro.redirect("/");
-    return;
-  } else {
-    title = post.title;
-    content = marked.parse(post.content);
-  }
-}
+const title = post.title;
+const content = marked.parse(post.content);
 ---
 
 <Layout title="">
