@@ -29,7 +29,7 @@ export const Dashboard = () => {
   return (
     <div class="mt-4 flex flex-1 flex-col gap-2">
       <p class="mb-4 text-2xl font-bold">Dashboard</p>
-      <div class="flex w-full gap-2 h-full pb-10">
+      <div class="flex h-full w-full gap-2 pb-10">
         <PostList posts={posts()} onSelect={(id) => setSelected(id)} />
         <div class="w-4" />
         <Editor post={post()} />

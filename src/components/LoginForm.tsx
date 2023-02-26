@@ -16,17 +16,17 @@ export const LoginForm = () => {
   };
 
   return (
-    <div class="w-full flex justify-center mt-10">
+    <div class="mt-10 flex w-full justify-center">
       <form onSubmit={handleSubmit} class="flex flex-col gap-2">
         <input
           type="password"
-          class="p-1 border-2 border-gray-400 hover:border-gray-700 focus:border-gray-900 dark:hover:border-gray-200 dark:focus:border-white outline-none bg-transparent rounded-lg"
+          class="rounded-lg border-2 border-gray-400 bg-transparent p-1 outline-none hover:border-gray-700 focus:border-gray-900 dark:hover:border-gray-200 dark:focus:border-white"
           value={secret()}
           onInput={(e) => setSecret(e.currentTarget.value)}
         />
         <input
           type="submit"
-          class="font-bold border-2 border-gray-500 rounded-lg self-end px-2 py-1 hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black"
+          class="self-end rounded-lg border-2 border-gray-500 px-2 py-1 font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black"
         >
           Submit
         </input>

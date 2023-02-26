@@ -8,18 +8,16 @@ type PostListProps = {
 
 export const PostList: Component<PostListProps> = (props) => {
   return (
-    <div class="flex gap-2 flex-col w-56 items-start rounded-xl bg-slate-200 dark:bg-slate-700 p-2">
+    <div class="flex w-56 flex-col items-start gap-2 rounded-xl bg-slate-200 p-2 dark:bg-slate-700">
       {props.posts.map(({ title, id }) => (
         <button
-          class="hover:bg-opacity-5 hover:bg-black dark:hover:bg-opacity-10 dark:hover:bg-white rounded-lg p-2 font-bold break-words w-full text-left"
+          class="w-full break-words rounded-lg p-2 text-left font-bold hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10"
           onClick={() => props.onSelect(id)}
         >
           {title}
         </button>
       ))}
-      <button class="p-2 font-bold w-full hover:text-sky-500">
-        + create
-      </button>
+      <button class="w-full p-2 font-bold hover:text-sky-500">+ create</button>
     </div>
   );
 };

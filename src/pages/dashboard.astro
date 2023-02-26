@@ -3,7 +3,7 @@ import { Dashboard } from "@/components/Dashboard";
 import FullLayout from "@/layouts/FullLayout.astro";
 import { getAuthData } from "@/utils/auth";
 
-const {isAuthed} = getAuthData(Astro.cookies);
+const { isAuthed } = getAuthData(Astro.cookies);
 if (!isAuthed) return Astro.redirect("/login");
 ---
 

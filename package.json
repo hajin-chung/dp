@@ -8,11 +8,11 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "wrangler pages publish dist"
+    "deploy": "wrangler pages publish dist",
+    "format": "prettier --write src"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^6.1.3",
-    "@astrojs/netlify": "^2.1.3",
     "@astrojs/solid-js": "^2.0.2",
     "@astrojs/tailwind": "^3.0.1",
     "@nanostores/solid": "^0.3.2",

@@ -1,6 +1,6 @@
 import type { Post } from "@/utils/types";
 import { marked } from "marked";
-import { Accessor, Component, createEffect, createSignal } from "solid-js";
+import { Component, createEffect, createSignal } from "solid-js";
 
 type EditorProps = {
   post: Post | undefined;
@@ -37,13 +37,13 @@ export const Editor: Component<EditorProps> = (props) => {
   };
 
   return (
-    <div class="flex w-full flex-col gap-4 h-full">
+    <div class="flex h-full w-full flex-col gap-4">
       <input
         value={title()}
         class="border-b-2 border-gray-500 bg-transparent pb-1 text-2xl font-bold outline-none focus:border-black dark:focus:border-white"
         onInput={(e) => setTitle(e.currentTarget.value)}
       />
-      <div class="flex w-full gap-4 flex-1">
+      <div class="flex w-full flex-1 gap-4">
         <textarea
           class="h-full w-1/2 border-none bg-white text-black outline-none dark:bg-slate-900 dark:text-white"
           value={content()}
