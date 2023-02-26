@@ -1,25 +1,28 @@
 import type { Post } from "@/utils/types";
 import { marked } from "marked";
-import { Component, createSignal } from "solid-js";
+import { Accessor, Component, createEffect, createSignal } from "solid-js";
 
 type EditorProps = {
-  post?: Post;
+  post: Post | undefined;
 };
 
 export const Editor: Component<EditorProps> = (props) => {
-  const post = props.post;
-  console.log(props.post);
-  const [content, setContent] = createSignal(post?.content ?? "");
-  const [title, setTitle] = createSignal(post?.title ?? "");
+  const [content, setContent] = createSignal(props.post?.content ?? "");
+  const [title, setTitle] = createSignal(props.post?.title ?? "");
   const parsed = () => marked.parse(content());
 
+  createEffect(() => {
+    setContent(props.post?.content ?? "");
+    setTitle(props.post?.title ?? "");
+  });
+
   const handleSubmit = async () => {
-    if (post) {
+    if (props.post) {
       // edit
       const res = await fetch("/api/post", {
         method: "PATCH",
         body: JSON.stringify({
-          ...post,
+          ...props.post,
           content: content(),
           title: title(),
         }),
@@ -34,26 +37,26 @@ export const Editor: Component<EditorProps> = (props) => {
   };
 
   return (
-    <div class="flex flex-col gap-4 w-full">
+    <div class="flex w-full flex-col gap-4 h-full">
       <input
         value={title()}
-        class="outline-none border-b-2 bg-transparent border-gray-500 focus:border-black dark:focus:border-white font-bold text-2xl pb-1"
+        class="border-b-2 border-gray-500 bg-transparent pb-1 text-2xl font-bold outline-none focus:border-black dark:focus:border-white"
         onInput={(e) => setTitle(e.currentTarget.value)}
       />
-      <div class="flex gap-4 w-full">
+      <div class="flex w-full gap-4 flex-1">
         <textarea
-          class="bg-white dark:bg-slate-900 text-black dark:text-white w-1/2 h-full border-none outline-none"
+          class="h-full w-1/2 border-none bg-white text-black outline-none dark:bg-slate-900 dark:text-white"
           value={content()}
           onInput={(e) => setContent(e.currentTarget.value)}
         />
         <div class="h-full w-[2px] bg-gray-500" />
         <article
           innerHTML={parsed()}
-          class="w-1/2 h-full prose prose-stone dark:prose-invert"
+          class="prose prose-stone h-full w-1/2 dark:prose-invert"
         />
       </div>
       <button
-        class="font-bold text-xl border-2 border-gray-500 rounded-lg self-end p-2 hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black"
+        class="self-end rounded-lg border-2 border-gray-500 p-2 text-xl font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black"
         onClick={handleSubmit}
       >
         Submit

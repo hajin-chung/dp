@@ -5,8 +5,8 @@ import { PostList } from "./PostList";
 
 export const Dashboard = () => {
   const [posts, setPosts] = createSignal<PostInfo[]>([]);
-  const [selected, setSelected] = createSignal<string | undefined>(undefined);
-  const [post, setPost] = createSignal<Post | undefined>(undefined);
+  const [selected, setSelected] = createSignal<string | undefined>();
+  const [post, setPost] = createSignal<Post | undefined>();
 
   onMount(async () => {
     const res = await fetch("/api/post");
@@ -20,14 +20,18 @@ export const Dashboard = () => {
     const res = await fetch(`/api/post?id=${selected()}`);
     const { post } = (await res.json()) as { post: Post };
     setPost(post);
-    console.log(post);
+  });
+
+  createEffect(async () => {
+    console.log(post());
   });
 
   return (
-    <div class="flex flex-col gap-2">
-      <p class="font-bold text-2xl mb-4">Dashboard</p>
-      <div class="flex w-full gap-2">
-        <PostList posts={posts} onSelect={(id) => setSelected(id)} />
+    <div class="mt-4 flex flex-1 flex-col gap-2">
+      <p class="mb-4 text-2xl font-bold">Dashboard</p>
+      <div class="flex w-full gap-2 h-full pb-10">
+        <PostList posts={posts()} onSelect={(id) => setSelected(id)} />
+        <div class="w-4" />
         <Editor post={post()} />
       </div>
     </div>
