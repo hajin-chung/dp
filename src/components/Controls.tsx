@@ -1,8 +1,8 @@
 import Sun from "@/static/sun.svg";
-import Moon from "@/static/Moon.svg";
+import Moon from "@/static/moon.svg";
 import { useStore } from "@nanostores/solid";
 import { theme } from "@/utils/theme";
-import { Component, createEffect } from "solid-js";
+import { createEffect } from "solid-js";
 
 export const Controls = () => {
   const $theme = useStore(theme);
