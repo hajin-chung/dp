@@ -19,7 +19,6 @@ import { Controls } from "@/components/Controls";
       document.getElementById("html").className = localStorage.getItem("theme");
     </script>
     <div class="mx-2 flex w-full flex-col md:max-w-6xl">
-      <Header />
       <slot />
     </div>
     <Controls client:load />

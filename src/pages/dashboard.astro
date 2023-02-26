@@ -8,5 +8,6 @@ if (!isAuthed) return Astro.redirect("/login");
 ---
 
 <FullLayout>
-  <Dashboard />
+  <div class="h-4" />
+  <Dashboard client:only />
 </FullLayout>

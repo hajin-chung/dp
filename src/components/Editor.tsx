@@ -6,10 +6,11 @@ type EditorProps = {
   post?: Post;
 };
 
-export const Editor: Component<EditorProps> = ({ post }) => {
+export const Editor: Component<EditorProps> = (props) => {
+  const post = props.post;
+  console.log(props.post);
   const [content, setContent] = createSignal(post?.content ?? "");
   const [title, setTitle] = createSignal(post?.title ?? "");
-  const [secret, setSecret] = createSignal("");
   const parsed = () => marked.parse(content());
 
   const handleSubmit = async () => {
@@ -17,7 +18,11 @@ export const Editor: Component<EditorProps> = ({ post }) => {
       // edit
       const res = await fetch("/api/post", {
         method: "PATCH",
-        body: JSON.stringify({ ...post, content: content(), title: title() }),
+        body: JSON.stringify({
+          ...post,
+          content: content(),
+          title: title(),
+        }),
       });
     } else {
       // create
@@ -29,7 +34,7 @@ export const Editor: Component<EditorProps> = ({ post }) => {
   };
 
   return (
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4 w-full">
       <input
         value={title()}
         class="outline-none border-b-2 bg-transparent border-gray-500 focus:border-black dark:focus:border-white font-bold text-2xl pb-1"
