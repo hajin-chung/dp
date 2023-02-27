@@ -1,4 +1,4 @@
-import type { Post, PostContent, PostInfo } from "./types";
+import type { Post, PostContent, PostInfo } from "../utils/types";
 import { createClient } from "@supabase/supabase-js";
 import { createId } from "@paralleldrive/cuid2";
 

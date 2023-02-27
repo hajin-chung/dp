@@ -6,7 +6,7 @@ import {
   getPost,
   getPosts,
   deletePost,
-} from "@/utils/db";
+} from "@/server/db";
 import { PostSchema } from "@/utils/types";
 
 export const postRouter = router({
