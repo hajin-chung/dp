@@ -1,5 +1,6 @@
 import { trpc } from "@/utils/trpc";
 import { createSignal } from "solid-js";
+import { Spinner } from "./atom/Spinner";
 
 export const TestSolid = () => {
   const [message, setMessage] = createSignal("");
@@ -20,6 +21,7 @@ export const TestSolid = () => {
       />
       <input type="submit" onClick={handleSubmit} />
       <p class="text-2xl font-bold">{message()}</p>
+      <Spinner />
     </div>
   );
 };

@@ -1,26 +1,40 @@
 import { trpc } from "@/utils/trpc";
 import type { Post } from "@/utils/types";
 import { marked } from "marked";
-import { Component, createEffect, createSignal } from "solid-js";
+import { Component, createEffect, createSignal, onMount, Show } from "solid-js";
+import { Spinner } from "./atom/Spinner";
 
 type EditorProps = {
-  post: Post | undefined;
+  id: string | undefined;
 };
 
 export const Editor: Component<EditorProps> = (props) => {
-  const [content, setContent] = createSignal(props.post?.content ?? "");
-  const [title, setTitle] = createSignal(props.post?.title ?? "");
+  const [post, setPost] = createSignal<Post | undefined>();
+  const [content, setContent] = createSignal("");
+  const [title, setTitle] = createSignal("");
+  const [loading, setLoading] = createSignal(false);
   const parsed = () => marked.parse(content());
 
+  createEffect(async () => {
+    if (!props.id) return;
+
+    setLoading(true);
+    const post = await trpc.post.getById.query(props.id);
+    setPost(post);
+    setLoading(false);
+  });
+
   createEffect(() => {
-    setContent(props.post?.content ?? "");
-    setTitle(props.post?.title ?? "");
+    setContent(post()?.content ?? "");
+    setTitle(post()?.title ?? "");
   });
 
   const handleSubmit = async () => {
-    if (props.post) {
+    setLoading(true);
+    const existingPost = post();
+    if (existingPost) {
       await trpc.post.update.mutate({
-        ...props.post,
+        ...existingPost,
         title: title(),
         content: content(),
       });
@@ -30,10 +44,16 @@ export const Editor: Component<EditorProps> = (props) => {
         content: content(),
       });
     }
+    setLoading(false);
   };
 
   return (
-    <div class="flex h-full w-full flex-col gap-4">
+    <div class="relative flex h-full w-full flex-col gap-4">
+      <Show when={loading()}>
+        <div class="absolute top-0 left-0 flex h-full w-full items-center justify-center backdrop-blur-lg transition-all">
+          <Spinner />
+        </div>
+      </Show>
       <input
         value={title()}
         class="border-b-2 border-gray-500 bg-transparent pb-1 text-2xl font-bold outline-none focus:border-black dark:focus:border-white"

@@ -1,7 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import PostCard from "@/components/PostCard.astro";
-import { getPosts } from "@/utils/db";
+import { getPosts } from "@/server/db";
 
 const posts = await getPosts();
 ---
