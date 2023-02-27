@@ -1,3 +1,4 @@
+import { trpc } from "@/utils/trpc";
 import type { Post, PostInfo } from "@/utils/types";
 import { createEffect, createSignal, onMount } from "solid-js";
 import { Editor } from "../Editor";
@@ -9,21 +10,15 @@ export const Dashboard = () => {
   const [post, setPost] = createSignal<Post | undefined>();
 
   onMount(async () => {
-    const res = await fetch("/api/post");
-    const { posts } = (await res.json()) as { posts: PostInfo[] };
+    const posts = await trpc.post.getList.query({});
     setPosts(posts);
   });
 
   createEffect(async () => {
     if (!selected()) return;
 
-    const res = await fetch(`/api/post?id=${selected()}`);
-    const { post } = (await res.json()) as { post: Post };
+    const post = await trpc.post.getById.query(selected() ?? "");
     setPost(post);
-  });
-
-  createEffect(async () => {
-    console.log(post());
   });
 
   return (

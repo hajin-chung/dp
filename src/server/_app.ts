@@ -1,8 +1,10 @@
 import { exampleRouter } from "./router/example";
+import { postRouter } from "./router/post";
 import { router } from "./trpc";
 
 export const appRouter = router({
   example: exampleRouter,
+  post: postRouter,
 });
 
 // Export only the type of a router!

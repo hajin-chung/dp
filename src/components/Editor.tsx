@@ -1,3 +1,4 @@
+import { trpc } from "@/utils/trpc";
 import type { Post } from "@/utils/types";
 import { marked } from "marked";
 import { Component, createEffect, createSignal } from "solid-js";
@@ -18,20 +19,15 @@ export const Editor: Component<EditorProps> = (props) => {
 
   const handleSubmit = async () => {
     if (props.post) {
-      // edit
-      const res = await fetch("/api/post", {
-        method: "PATCH",
-        body: JSON.stringify({
-          ...props.post,
-          content: content(),
-          title: title(),
-        }),
+      await trpc.post.update.mutate({
+        ...props.post,
+        title: title(),
+        content: content(),
       });
     } else {
-      // create
-      const res = await fetch("/api/post", {
-        method: "POST",
-        body: JSON.stringify({ content: content(), title: title() }),
+      await trpc.post.create.mutate({
+        title: title(),
+        content: content(),
       });
     }
   };

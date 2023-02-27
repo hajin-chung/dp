@@ -5,7 +5,7 @@ import { createId } from "@paralleldrive/cuid2";
 const DB_URI = import.meta.env.DB_URI;
 const DB_KEY = import.meta.env.DB_KEY;
 
-const client = createClient(DB_URI, DB_KEY);
+export const client = createClient(DB_URI, DB_KEY);
 
 export const getPosts = async (cursor?: string) => {
   try {
@@ -63,5 +63,16 @@ export const updatePost = async (updatedPost: Post) => {
   } catch (e) {
     console.log(e);
     return { error: true, message: e };
+  }
+};
+
+export const deletePost = async (id: string) => {
+  try {
+    const { error } = await client.from("posts").delete().eq("id", id);
+    if (error) throw error;
+    return true;
+  } catch (e) {
+    console.log(e);
+    return undefined;
   }
 };

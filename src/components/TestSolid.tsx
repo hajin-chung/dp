@@ -6,9 +6,9 @@ export const TestSolid = () => {
   const [name, setName] = createSignal("");
 
   const handleSubmit = async () => {
-    const message = await trpc.example.hi.query({name: name()})
+    const message = await trpc.example.hi.query({ name: name() });
     setMessage(message);
-  }
+  };
 
   return (
     <div>
