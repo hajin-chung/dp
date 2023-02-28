@@ -1,7 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { getPost } from "@/server/db";
-import { marked } from "marked";
+import { renderToString } from "@/utils/render";
 
 const { id } = Astro.params;
 if (!id) return Astro.redirect("/");
@@ -10,7 +10,7 @@ const post = await getPost(id);
 if (!post) return Astro.redirect("/");
 
 const title = post.title;
-const content = marked.parse(post.content);
+const content = renderToString(post.content);
 ---
 
 <Layout title="">

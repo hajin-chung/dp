@@ -1,6 +1,6 @@
+import { renderToString } from "@/utils/render";
 import { trpc } from "@/utils/trpc";
 import type { Post } from "@/utils/types";
-import { marked } from "marked";
 import { Component, createEffect, createSignal, onMount, Show } from "solid-js";
 import { Spinner } from "./atom/Spinner";
 
@@ -13,15 +13,17 @@ export const Editor: Component<EditorProps> = (props) => {
   const [content, setContent] = createSignal("");
   const [title, setTitle] = createSignal("");
   const [loading, setLoading] = createSignal(false);
-  const parsed = () => marked.parse(content());
+  const parsed = () => renderToString(content());
 
   createEffect(async () => {
-    if (!props.id) return;
-
-    setLoading(true);
-    const post = await trpc.post.getById.query(props.id);
-    setPost(post);
-    setLoading(false);
+    if (!props.id) {
+      setPost(undefined);
+    } else {
+      setLoading(true);
+      const post = await trpc.post.getById.query(props.id);
+      setPost(post);
+      setLoading(false);
+    }
   });
 
   createEffect(() => {

@@ -4,7 +4,7 @@ import { Component, createSignal, onMount, Show } from "solid-js";
 import { Spinner } from "../atom/Spinner";
 
 type PostListProps = {
-  onSelect: (id: string) => void;
+  onSelect: (id: string | undefined) => void;
 };
 
 export const PostList: Component<PostListProps> = (props) => {
@@ -33,7 +33,12 @@ export const PostList: Component<PostListProps> = (props) => {
           {title}
         </button>
       ))}
-      <button class="w-full p-2 font-bold hover:text-sky-500">+ create</button>
+      <button
+        class="w-full p-2 font-bold hover:text-sky-500"
+        onClick={() => props.onSelect(undefined)}
+      >
+        + create
+      </button>
     </div>
   );
 };

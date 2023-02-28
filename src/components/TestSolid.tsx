@@ -1,4 +1,5 @@
 import { trpc } from "@/utils/trpc";
+import katex from "katex";
 import { createSignal } from "solid-js";
 import { Spinner } from "./atom/Spinner";
 
@@ -22,6 +23,7 @@ export const TestSolid = () => {
       <input type="submit" onClick={handleSubmit} />
       <p class="text-2xl font-bold">{message()}</p>
       <Spinner />
+      <div innerHTML={katex.renderToString("a=1")} />
     </div>
   );
 };

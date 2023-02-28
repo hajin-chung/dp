@@ -8,12 +8,10 @@ const { id } = Astro.params;
 const { isAuthed } = getAuthData(Astro.cookies);
 if (!id) return Astro.redirect("/");
 if (!isAuthed) return Astro.redirect("/login");
-
-const post = await getPost(id);
 ---
 
 <Layout title="">
   <div class="flex w-full flex-col gap-1">
-    <Editor post={post} client:load />
+    <Editor id={id} client:load />
   </div>
 </Layout>

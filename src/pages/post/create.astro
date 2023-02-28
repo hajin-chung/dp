@@ -9,6 +9,6 @@ if (!isAuthed) return Astro.redirect("/login");
 
 <Layout title="">
   <div class="flex w-full flex-col gap-1">
-    <Editor post={undefined} client:load />
+    <Editor id={undefined} client:load />
   </div>
 </Layout>
