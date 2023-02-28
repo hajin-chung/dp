@@ -9,6 +9,6 @@ export const PostSchema = z.object({
 
 export type Post = z.infer<typeof PostSchema>;
 export type PostInfo = Pick<Post, "id" | "title" | "created">;
-export type PostContent = Pick<Post, "title" | "content">;
+export type PostContent = Pick<Post, "title" | "content" | "created">;
 
 export type Theme = "dark" | "light";

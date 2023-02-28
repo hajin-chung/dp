@@ -20,7 +20,7 @@ export const postRouter = router({
       return getPosts(cursor);
     }),
   create: adminProcedure
-    .input(PostSchema.pick({ title: true, content: true }))
+    .input(PostSchema.pick({ title: true, content: true, created: true }))
     .mutation(({ input }) => {
       return createPost(input);
     }),

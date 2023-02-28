@@ -40,8 +40,7 @@ export const getPost = async (id: string) => {
 export const createPost = async (newPost: PostContent) => {
   try {
     const id = createId();
-    const created = new Date().toISOString();
-    const post = { id, created, ...newPost };
+    const post = { id, ...newPost };
     const { error } = await client.from("posts").insert(post);
 
     if (error) throw error;

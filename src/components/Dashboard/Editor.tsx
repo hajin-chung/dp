@@ -1,3 +1,4 @@
+import { formatDate } from "@/utils/formatDate";
 import { renderToString } from "@/utils/render";
 import { trpc } from "@/utils/trpc";
 import type { Post } from "@/utils/types";
@@ -13,6 +14,7 @@ export const Editor: Component<EditorProps> = (props) => {
   const [post, setPost] = createSignal<Post | undefined>();
   const [content, setContent] = createSignal("");
   const [title, setTitle] = createSignal("");
+  const [created, setCreated] = createSignal(formatDate(new Date().toString()));
   const [loading, setLoading] = createSignal(false);
   const parsed = () => renderToString(content());
 
@@ -30,6 +32,7 @@ export const Editor: Component<EditorProps> = (props) => {
   createEffect(() => {
     setContent(post()?.content ?? "");
     setTitle(post()?.title ?? "");
+    setCreated(formatDate(post()?.created ?? new Date().toString()));
   });
 
   const handleSubmit = async () => {
@@ -40,11 +43,13 @@ export const Editor: Component<EditorProps> = (props) => {
         ...existingPost,
         title: title(),
         content: content(),
+        created: created(),
       });
     } else {
       await trpc.post.create.mutate({
         title: title(),
         content: content(),
+        created: created(),
       });
     }
     setLoading(false);
@@ -54,16 +59,18 @@ export const Editor: Component<EditorProps> = (props) => {
     if (!props.id) return;
     setLoading(true);
     await trpc.post.deleteById.mutate(props.id);
+    setPost(undefined);
     setLoading(false);
   };
 
   return (
     <div class="relative flex h-full w-full flex-col gap-4">
-      <Show when={loading()}>
-        <div class="absolute top-0 left-0 flex h-full w-full items-center justify-center backdrop-blur-lg transition-all">
-          <Spinner />
-        </div>
-      </Show>
+      <input
+        type="date"
+        value={created()}
+        class="self-end bg-transparent"
+        onInput={(e) => setCreated(e.currentTarget.value)}
+      />
       <input
         value={title()}
         class="border-b-2 border-gray-500 bg-transparent pb-1 text-2xl font-bold outline-none focus:border-black dark:focus:border-white"
@@ -81,7 +88,10 @@ export const Editor: Component<EditorProps> = (props) => {
           class="prose prose-stone h-full w-1/2 dark:prose-invert"
         />
       </div>
-      <div class="flex gap-4 self-end">
+      <div class="flex items-center gap-4 self-end">
+        <Show when={loading()}>
+          <Spinner />
+        </Show>
         {props.id && (
           <Button onClick={handleDelete} class="self-end">
             Delete
