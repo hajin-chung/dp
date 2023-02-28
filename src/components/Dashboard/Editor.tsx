@@ -2,7 +2,8 @@ import { renderToString } from "@/utils/render";
 import { trpc } from "@/utils/trpc";
 import type { Post } from "@/utils/types";
 import { Component, createEffect, createSignal, onMount, Show } from "solid-js";
-import { Spinner } from "./atom/Spinner";
+import { Button } from "../atom/Button";
+import { Spinner } from "../atom/Spinner";
 
 type EditorProps = {
   id: string | undefined;
@@ -49,6 +50,13 @@ export const Editor: Component<EditorProps> = (props) => {
     setLoading(false);
   };
 
+  const handleDelete = async () => {
+    if (!props.id) return;
+    setLoading(true);
+    await trpc.post.deleteById.mutate(props.id);
+    setLoading(false);
+  };
+
   return (
     <div class="relative flex h-full w-full flex-col gap-4">
       <Show when={loading()}>
@@ -73,12 +81,14 @@ export const Editor: Component<EditorProps> = (props) => {
           class="prose prose-stone h-full w-1/2 dark:prose-invert"
         />
       </div>
-      <button
-        class="self-end rounded-lg border-2 border-gray-500 p-2 text-xl font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black"
-        onClick={handleSubmit}
-      >
-        Submit
-      </button>
+      <div class="flex gap-4 self-end">
+        {props.id && (
+          <Button onClick={handleDelete} class="self-end">
+            Delete
+          </Button>
+        )}
+        <Button onClick={handleSubmit} class="self-end" />
+      </div>
     </div>
   );
 };

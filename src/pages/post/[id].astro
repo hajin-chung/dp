@@ -4,10 +4,10 @@ import { getPost } from "@/server/db";
 import { renderToString } from "@/utils/render";
 
 const { id } = Astro.params;
-if (!id) return Astro.redirect("/");
+if (!id) return Astro.redirect("/404");
 
 const post = await getPost(id);
-if (!post) return Astro.redirect("/");
+if (!post) return Astro.redirect("/404");
 
 const title = post.title;
 const content = renderToString(post.content);

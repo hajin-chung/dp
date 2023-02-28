@@ -1,6 +1,7 @@
 import { trpc } from "@/utils/trpc";
 import type { PostInfo } from "@/utils/types";
 import { Component, createSignal, onMount, Show } from "solid-js";
+import { Button } from "../atom/Button";
 import { Spinner } from "../atom/Spinner";
 
 type PostListProps = {
@@ -11,12 +12,14 @@ export const PostList: Component<PostListProps> = (props) => {
   const [posts, setPosts] = createSignal<PostInfo[]>([]);
   const [loading, setLoading] = createSignal(false);
 
-  onMount(async () => {
+  const setList = async () => {
     setLoading(true);
     const posts = await trpc.post.getList.query({});
     setPosts(posts);
     setLoading(false);
-  });
+  };
+
+  onMount(setList);
 
   return (
     <div class="relative flex w-56 flex-col items-start gap-2 rounded-xl bg-slate-200 p-2 dark:bg-slate-700">
@@ -33,12 +36,12 @@ export const PostList: Component<PostListProps> = (props) => {
           {title}
         </button>
       ))}
-      <button
-        class="w-full p-2 font-bold hover:text-sky-500"
-        onClick={() => props.onSelect(undefined)}
-      >
-        + create
-      </button>
+      <Button onClick={() => props.onSelect(undefined)} class="self-end">
+        New
+      </Button>
+      <Button onClick={setList} class="self-end">
+        Refresh
+      </Button>
     </div>
   );
 };

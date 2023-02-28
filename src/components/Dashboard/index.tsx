@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { Editor } from "../Editor";
+import { Editor } from "./Editor";
 import { PostList } from "./PostList";
 
 export const Dashboard = () => {

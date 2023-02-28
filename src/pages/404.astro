@@ -1,0 +1,14 @@
+---
+import { Button } from "@/components/atom/Button";
+import FullLayout from "@/layouts/FullLayout.astro";
+---
+
+<FullLayout showHeader={false}>
+  <div class="flex h-full w-full flex-col items-center justify-center gap-4">
+    <p class="font-bold">Post Not Found!</p>
+    <p class="font-bold">포스트를 찾지 못했습니다.</p>
+    <Button client:load onClick={() => window.location.replace("/")}>
+      돌아가기
+    </Button>
+  </div>
+</FullLayout>

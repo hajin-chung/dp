@@ -1,6 +1,12 @@
 ---
 import Header from "@/components/Header.astro";
 import { Controls } from "@/components/Controls";
+
+export type Props = {
+  showHeader?: boolean;
+};
+
+const { showHeader = true } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -10,7 +16,12 @@ import { Controls } from "@/components/Controls";
     <title>Decompressed Poems</title>
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+      integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0"
+      crossorigin="anonymous"
+    />
     <meta name="generator" content={Astro.generator} />
   </head>
   <body
@@ -20,7 +31,7 @@ import { Controls } from "@/components/Controls";
       document.getElementById("html").className = localStorage.getItem("theme");
     </script>
     <div class="mx-2 grid w-full grid-rows-layout md:max-w-6xl">
-      <Header />
+      {showHeader ? <Header /> : <div />}
       <slot />
     </div>
     <Controls client:load />

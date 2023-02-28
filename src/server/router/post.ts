@@ -27,7 +27,7 @@ export const postRouter = router({
   update: adminProcedure.input(PostSchema).mutation(({ input }) => {
     return updatePost(input);
   }),
-  deleteById: adminProcedure.input(z.string()).query(({ input }) => {
+  deleteById: adminProcedure.input(z.string()).mutation(({ input }) => {
     return deletePost(input);
   }),
 });

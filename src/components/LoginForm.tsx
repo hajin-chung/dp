@@ -1,4 +1,5 @@
 import { createSignal } from "solid-js";
+import { Button } from "./atom/Button";
 
 export const LoginForm = () => {
   const [secret, setSecret] = createSignal("");
@@ -24,12 +25,7 @@ export const LoginForm = () => {
           value={secret()}
           onInput={(e) => setSecret(e.currentTarget.value)}
         />
-        <input
-          type="submit"
-          class="self-end rounded-lg border-2 border-gray-500 px-2 py-1 font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black"
-        >
-          Submit
-        </input>
+        <Button onClick={handleSubmit} />
         <p class="text-red-500">{message}</p>
       </form>
     </div>
